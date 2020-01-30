@@ -3,10 +3,10 @@ import requests
 import os
 import markdown
 import json
-import Model
 import mysql.connector as mysql
 
 from Model import User
+from Manager import DBManager
 
 API_URL = "https://www.alphavantage.co/query"
 
@@ -32,18 +32,18 @@ def AuthenticateUser():
     new_User.pwd = user['Pwd']
     new_User.token = user['Token']
 
-    '''db = DBManager.initdb()
+    db = DBManager.DBManager.initdb()
 
     cursor = db.cursor()
 
-    cursor.execute("select * from StockAPI.Investor_Details")
+    cursor.execute("select * from StockBroker.Users")
     rows = cursor.fetchall()
     if cursor.rowcount > 0:
-        return true
+        return jsonify("True")
     else:
-        return false'''
+        return jsonify("False")
 
-    return new_User.toJSON(), 200
+    # return new_User.toJSON(), 200
 
 
 # Get Quote for the company mentioned in the parameter (Company Symbol)

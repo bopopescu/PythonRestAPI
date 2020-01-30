@@ -1,11 +1,13 @@
+import mysql.connector as mysql
+
 class DBManager:
 
     @staticmethod
-    def initdb(self):
+    def initdb():
         db = mysql.connect(
             host="127.0.0.1",
             user="root",
             passwd="dutch@123",
-            database="TestDb"
+            database="StockBroker"
         )
         return db

@@ -3,8 +3,10 @@ import requests
 import os
 import markdown
 import json
-import User
+import Model
 import mysql.connector as mysql
+
+from Model import User
 
 API_URL = "https://www.alphavantage.co/query"
 
@@ -24,20 +26,13 @@ def index():
 
 @app.route("/AuthenticateUser")
 def AuthenticateUser():
-    new_User = User()
+    new_User = User.User()
     user = request.json
     new_User.uname = user['Uname']
     new_User.pwd = user['Pwd']
     new_User.token = user['Token']
 
-    #DBManager.initdb()
-
-    db = mysql.connect(
-            host="127.0.0.1",
-            user="root",
-            passwd="dutch@123",
-            database="StockAPI"
-        )
+    '''db = DBManager.initdb()
 
     cursor = db.cursor()
 
@@ -46,9 +41,9 @@ def AuthenticateUser():
     if cursor.rowcount > 0:
         return true
     else:
-        return false
+        return false'''
 
-    #return new_User.toJSON(), 200
+    return new_User.toJSON(), 200
 
 
 # Get Quote for the company mentioned in the parameter (Company Symbol)
@@ -75,29 +70,6 @@ def searchcomp(searchstring):
     response = requests.get(API_URL, params=data)
     return response.content
 
-
-class User:
-
-    def __init__(self):
-        '''self.uname = "abc"
-        self.pwd = "hq"'''
-
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=True, indent=4)
-
-
-'''class DBManager:
-
-    @staticmethod
-    def initdb(self):
-        db = mysql.connect(
-            host="127.0.0.1",
-            user="root",
-            passwd="dutch@123",
-            database="TestDb"
-        )
-'''
 
 if __name__ == '__main__':
     app.run()

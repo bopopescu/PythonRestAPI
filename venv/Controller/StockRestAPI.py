@@ -34,10 +34,7 @@ def AuthenticateUser():
 
     db = DBManager.DBManager.initdb()
 
-    cursor = db.cursor()
-
-    cursor.execute("select * from StockBroker.Users")
-    rows = cursor.fetchall()
+    cursor = DBManager.DBManager.executequery("select * from StockBroker.Users where UserName=" + "'" + new_User.uname + "'")
     if cursor.rowcount > 0:
         return jsonify("True")
     else:
